@@ -209,7 +209,7 @@ const CategoryList = () => {
                                                         <button
                                                             type="button"
                                                             className="btn btn-outline-warning"
-                                                            onClick={() => navigate(`/categories/${category._id}`)}
+                                                            onClick={() => navigate(`/categories/edit/${category._id}`)}
                                                             title="Edit"
                                                         >
                                                             <i className="bi bi-pencil"></i>

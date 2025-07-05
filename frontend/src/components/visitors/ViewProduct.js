@@ -345,7 +345,7 @@ const ProductView = () => {
                         className={`tab-button ${activeTab === 'shipping' ? 'active' : ''}`}
                         onClick={() => setActiveTab('shipping')}
                     >
-                        Shipping & Returns
+                        Additional Information
                     </button>
                 </div>
 
@@ -468,19 +468,7 @@ const ProductView = () => {
 
                     {activeTab === 'shipping' && (
                         <div className="shipping-content">
-                            <h3>Shipping Information</h3>
-                            <ul>
-                                <li>Free delivery on orders over ₨5000</li>
-                                <li>Estimated delivery time: 2-5 business days</li>
-                                <li>Shipping available within Nepal only</li>
-                            </ul>
-
-                            <h3>Return Policy</h3>
-                            <ul>
-                                <li>7 days return policy</li>
-                                <li>Product must be unused and in original packaging</li>
-                                <li>Customer bears return shipping costs</li>
-                            </ul>
+                            {product.additionalInformation}
                         </div>
                     )}
                 </div>

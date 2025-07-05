@@ -39,11 +39,12 @@ const productSchema = new mongoose.Schema({
     },
     shortDescription: {
         type: String,
-        required: true,
     },
     longDescription: {
         type: String,
-        required: true,
+    },
+    additionalInformation: {
+        type: String,
     },
     image: {
         public_id: {
@@ -56,7 +57,7 @@ const productSchema = new mongoose.Schema({
         }
     },
     reviews: [reviewSchema],
-    
+
     rating: {
         type: Number,
         default: 0

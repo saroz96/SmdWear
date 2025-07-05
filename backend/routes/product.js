@@ -10,7 +10,7 @@ const User = require('../models/User');
 
 // Create new product with image upload
 router.post('/products/new', upload.single('image'), async (req, res) => {
-    const { name, brand, category, shortDescription, longDescription } = req.body;
+    const { name, brand, category, shortDescription, longDescription, additionalInformation } = req.body;
 
     if (!req.file) {
         return res.status(400).json({ message: 'Product image is required' });
@@ -30,6 +30,7 @@ router.post('/products/new', upload.single('image'), async (req, res) => {
             category: category || null,
             shortDescription,
             longDescription,
+            additionalInformation,
             image: {
                 public_id: req.file.filename, // Cloudinary public_id
                 url: req.file.path // Cloudinary secure_url
@@ -47,6 +48,7 @@ router.post('/products/new', upload.single('image'), async (req, res) => {
                 category: product.category,
                 shortDescription: product.shortDescription,
                 longDescription: product.longDescription,
+                additionalInformation: product.additionalInformation,
                 image: product.image.url,
                 createdAt: product.createdAt
             }
@@ -63,6 +65,17 @@ router.post('/products/new', upload.single('image'), async (req, res) => {
         });
     }
 });
+
+//counts product documents
+router.get('/products/count', async (req, res) => {
+    try {
+        const count = await Product.countDocuments();
+        res.json({ count });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Server error during products counts' });
+    }
+})
 
 
 // Get all products for owner
@@ -181,6 +194,7 @@ router.get('/products/view/:id', async (req, res) => {
             } : null,
             shortDescription: product.shortDescription,
             longDescription: product.longDescription,
+            additionalInformation: product.additionalInformation,
             image: product.image,
             reviews: product.reviews,
             rating: product.rating,
@@ -368,7 +382,11 @@ router.get('/products/:id', async (req, res) => {
         res.json({
             _id: product._id,
             name: product.name,
-            description: product.description,
+            brand: product.brand,
+            category: product.category,
+            shortDescription: product.shortDescription,
+            longDescription: product.longDescription,
+            additionalInformation: product.additionalInformation,
             image: product.image,
             // include other fields as needed
         });
@@ -389,11 +407,11 @@ router.put('/products/edit/:id', upload.single('image'), async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const { name, description } = req.body;
+        const { name, brand, category, shortDescription, longDescription, additionalInformation } = req.body;
 
         // Validation
-        if (!name || !description) {
-            return res.status(400).json({ message: 'Name and description are required' });
+        if (!name) {
+            return res.status(400).json({ message: 'Name required' });
         }
 
         let image = product.image;
@@ -416,7 +434,11 @@ router.put('/products/edit/:id', upload.single('image'), async (req, res) => {
             req.params.id,
             {
                 name,
-                description,
+                brand,
+                category,
+                shortDescription,
+                longDescription,
+                additionalInformation,
                 image: image || product.image, // Fallback to existing image if none provided
                 updatedAt: Date.now()
             },
@@ -431,7 +453,11 @@ router.put('/products/edit/:id', upload.single('image'), async (req, res) => {
             product: {
                 _id: updatedProduct._id,
                 name: updatedProduct.name,
-                description: updatedProduct.description,
+                brand: updatedProduct.brand,
+                category: updatedProduct.category,
+                shortDescription: updatedProduct.shortDescription,
+                longDescription: updatedProduct.longDescription,
+                additionalInformation: updatedProduct.additionalInformation,
                 image: updatedProduct.image.url,
                 updatedAt: updatedProduct.updatedAt
             }

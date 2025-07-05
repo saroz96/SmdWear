@@ -9,36 +9,61 @@ const EditProduct = () => {
   const [product, setProduct] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    description: '',
+    brand: '',
+    category: '',
+    shortDescription: '',
+    longDescription: '',
+    additionalInformation: '',
     image: null,
-    currentImageUrl: ''
+    currentImageUrl: '',
+    imagePreview: null
   });
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [brandLoading, setBrandLoading] = useState(true);
+  const [categoryLoading, setCategoryLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
-  // Fetch product data
+  // Fetch product data, brands, and categories
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/products/${id}`);
-        setProduct(response.data);
+        // Fetch brands
+        const brandsResponse = await axios.get('/api/brands');
+        setBrands(brandsResponse.data);
+        setBrandLoading(false);
+
+        // Fetch categories
+        const categoriesResponse = await axios.get('/api/categories');
+        setCategories(categoriesResponse.data);
+        setCategoryLoading(false);
+
+        // Fetch product
+        const productResponse = await axios.get(`/api/products/${id}`);
+        setProduct(productResponse.data);
         setFormData({
-          name: response.data.name,
-          description: response.data.description,
-          currentImageUrl: response.data.image?.url || '',
-          image: null
+          name: productResponse.data.name,
+          brand: productResponse.data.brand?._id || productResponse.data.brand || '',
+          category: productResponse.data.category?._id || productResponse.data.category || '',
+          shortDescription: productResponse.data.shortDescription || '',
+          longDescription: productResponse.data.longDescription || '',
+          additionalInformation: productResponse.data.additionalInformation || '',
+          currentImageUrl: productResponse.data.image?.url || '',
+          image: null,
+          imagePreview: null
         });
       } catch (err) {
-        setError(err.response?.data?.message || 'Failed to fetch product');
+        setError(err.response?.data?.message || 'Failed to fetch data');
       } finally {
         setFetching(false);
       }
     };
 
-    fetchProduct();
+    fetchData();
   }, [id]);
 
   const handleChange = (e) => {
@@ -49,7 +74,7 @@ const EditProduct = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     const previewUrl = URL.createObjectURL(file);
     setFormData(prev => ({
       ...prev,
@@ -67,8 +92,12 @@ const EditProduct = () => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
-      formDataToSend.append('description', formData.description);
-      
+      formDataToSend.append('brand', formData.brand);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('shortDescription', formData.shortDescription);
+      formDataToSend.append('longDescription', formData.longDescription);
+      formDataToSend.append('additionalInformation', formData.additionalInformation);
+
       if (formData.image) {
         formDataToSend.append('image', formData.image);
       }
@@ -144,7 +173,7 @@ const EditProduct = () => {
       {success && (
         <div className="success-message">
           {success}
-          <button onClick={() => navigate(`/products`)} className="view-btn">
+          <button onClick={() => navigate(`/products/get/all`)} className="view-btn">
             View All Products
           </button>
         </div>
@@ -166,16 +195,74 @@ const EditProduct = () => {
         </div>
 
         <div className="form-group">
-          <label>
-            Description <span className="required">*</span>
-          </label>
+          <label>Brand</label>
+          {brandLoading ? (
+            <div className="loading-text">Loading brands...</div>
+          ) : (
+            <select
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              className="brand-select"
+            >
+              <option value="">Select a brand</option>
+              {brands.map(brand => (
+                <option key={brand._id} value={brand._id}>
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
+        <div className="form-group">
+          <label>Category</label>
+          {categoryLoading ? (
+            <div className="loading-text">Loading categories...</div>
+          ) : (
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="category-select"
+            >
+              <option value="">Select a category</option>
+              {categories.map(category => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
+        <div className="form-group">
+          <label>Product Description</label>
           <textarea
-            name="description"
-            value={formData.description}
+            name="longDescription"
+            value={formData.longDescription}
+            onChange={handleChange}
+            rows="8"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Short Description</label>
+          <textarea
+            name="shortDescription"
+            value={formData.shortDescription}
             onChange={handleChange}
             rows="4"
-            required
-            placeholder="Describe your product..."
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Additional Information</label>
+          <textarea
+            name="additionalInformation"
+            value={formData.additionalInformation}
+            onChange={handleChange}
+            rows="4"
           />
         </div>
 
@@ -183,14 +270,14 @@ const EditProduct = () => {
           <label>Current Image</label>
           {formData.currentImageUrl && (
             <div className="current-image">
-              <img 
-                src={formData.currentImageUrl} 
-                alt="Current product" 
+              <img
+                src={formData.currentImageUrl}
+                alt="Current product"
                 className="current-image-preview"
               />
             </div>
           )}
-          
+
           <label>Update Image (optional)</label>
           <input
             type="file"
@@ -200,9 +287,9 @@ const EditProduct = () => {
           {formData.imagePreview && (
             <div className="image-preview">
               <p>New Image Preview:</p>
-              <img 
-                src={formData.imagePreview} 
-                alt="Preview" 
+              <img
+                src={formData.imagePreview}
+                alt="Preview"
                 className="preview-image"
               />
             </div>
@@ -210,15 +297,15 @@ const EditProduct = () => {
         </div>
 
         <div className="form-actions">
-          <button 
+          <button
             type="button"
             className="cancel-btn"
             onClick={() => navigate(-1)}
           >
             Cancel
           </button>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="submit-btn"
             disabled={loading}
           >

@@ -11,6 +11,7 @@ const Product = ({ product }) => {
     category: '',
     shortDescription: '',
     longDescription: '',
+    additionalInformation: '',
     image: null
   });
   const [brands, setBrands] = useState([]);
@@ -58,6 +59,7 @@ const Product = ({ product }) => {
         category: product.category?._id || '',
         shortDescription: product.shortDescription || '',
         longDescription: product.longDescription || '',
+        additionalInformation: product.additionalInformation || '',
         image: product.image?.url || ''
       });
     }
@@ -94,6 +96,7 @@ const Product = ({ product }) => {
       formDataToSend.append('category', formData.category);
       formDataToSend.append('shortDescription', formData.shortDescription);
       formDataToSend.append('longDescription', formData.longDescription);
+      formDataToSend.append('additionalInformation', formData.additionalInformation);
 
       if (formData.file) {
         formDataToSend.append('image', formData.file);
@@ -116,6 +119,7 @@ const Product = ({ product }) => {
           category: response.data.category?._id || '',
           shortDescription: response.data.shortDescription,
           longDescription: response.data.longDescription,
+          additionalInformation: response.data.additionalInformation,
           image: response.data.image?.url || ''
         }));
       } else {
@@ -236,7 +240,6 @@ const Product = ({ product }) => {
             value={formData.longDescription}
             onChange={handleChange}
             rows="8"
-            required
           />
         </div>
 
@@ -249,7 +252,18 @@ const Product = ({ product }) => {
             value={formData.shortDescription}
             onChange={handleChange}
             rows="4"
-            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>
+            Additional Information About Product
+          </label>
+          <textarea
+            name="additionalInformation"
+            value={formData.additionalInformation}
+            onChange={handleChange}
+            rows="4"
           />
         </div>
 

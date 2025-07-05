@@ -4,13 +4,13 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Navbar from '../Navbar';
 import { FaArrowLeft, FaCalendarAlt, FaEdit, FaHistory } from 'react-icons/fa';
-import '../../stylesheet/brand/ViewBrand.css';
+import '../../stylesheet/Category/ViewCategory.css';
 
-const BrandView = () => {
+const CategoryView = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { userInfo } = useSelector((state) => state.auth);
-    const [brand, setBrand] = useState(null);
+    const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [relatedProducts, setRelatedProducts] = useState([]);
@@ -18,28 +18,28 @@ const BrandView = () => {
     const [errorRelated, setErrorRelated] = useState(null);
 
     useEffect(() => {
-        const fetchBrand = async () => {
+        const fetchCategory = async () => {
             try {
-                const { data } = await axios.get(`/api/brands/product/${id}`);
-                setBrand(data);
+                const { data } = await axios.get(`/api/categories/view/${id}`);
+                setCategory(data);
                 setLoading(false);
 
-                // Fetch related products after brand is loaded
+                // Fetch related products after category is loaded
                 if (data._id) {
                     fetchRelatedProducts(data._id);
                 }
             } catch (err) {
-                setError(err.response?.data?.message || 'Failed to load brand');
+                setError(err.response?.data?.message || 'Failed to load category');
                 setLoading(false);
-                console.error('Error fetching brand:', err);
+                console.error('Error fetching category:', err);
             }
         };
 
-        const fetchRelatedProducts = async (brandId) => {
+        const fetchRelatedProducts = async (categoryId) => {
             setLoadingRelated(true);
             setErrorRelated(null);
             try {
-                const response = await axios.get(`/api/products/brand/${brandId}`);
+                const response = await axios.get(`/api/products/categories/${categoryId}`);
                 setRelatedProducts(response.data);
             } catch (err) {
                 setErrorRelated(err.response?.data?.message || 'Failed to load related products');
@@ -49,12 +49,12 @@ const BrandView = () => {
             }
         };
 
-        fetchBrand();
+        fetchCategory();
     }, [id]);
 
     if (loading) {
         return (
-            <div className="brand-view-loading">
+            <div className="category-view-loading">
                 <div className="loading-spinner"></div>
             </div>
         );
@@ -62,7 +62,7 @@ const BrandView = () => {
 
     if (error) {
         return (
-            <div className="brand-view-error-container">
+            <div className="category-view-error-container">
                 <div className="error-message">
                     {error}
                     <button
@@ -70,24 +70,24 @@ const BrandView = () => {
                         className="btn btn-secondary"
                     >
                         <FaArrowLeft className="icon" />
-                        Back to Brands
+                        Back to category
                     </button>
                 </div>
             </div>
         );
     }
 
-    if (!brand) {
+    if (!category) {
         return (
-            <div className="brand-not-found">
+            <div className="category-not-found">
                 <div className="not-found-content">
-                    <h2>Brand not found</h2>
+                    <h2>Category not found</h2>
                     <button
                         onClick={() => navigate(-1)}
                         className="btn btn-secondary"
                     >
                         <FaArrowLeft className="icon" />
-                        Back to Brands
+                        Back to Category
                     </button>
                 </div>
             </div>
@@ -95,33 +95,33 @@ const BrandView = () => {
     }
 
     return (
-        <div className="brand-view-container">
+        <div className="category-view-container">
             <Navbar />
 
-            <div className="brand-content-wrapper">
-                {/* Main Brand Content */}
+            <div className="category-content-wrapper">
+                {/* Main Category Content */}
                 <div className="">
-                    <div className="brand-details-container">
-                        {/* Brand Image */}
+                    <div className="category-details-container">
+                        {/* Category Image */}
                         <div className="">
                             <img
-                                src={brand.image?.url || '/images/placeholder-brand.png'}
-                                alt={brand.name}
-                                className="brand-image"
+                                src={category.image?.url || '/images/placeholder-category.png'}
+                                alt={category.name}
+                                className="category-image"
                                 onError={(e) => {
-                                    e.target.src = '/images/placeholder-brand.png';
+                                    e.target.src = '/images/placeholder-category.png';
                                 }}
                             />
                         </div>
 
-                        {/* Brand Details */}
-                        <div className="brand-info">
-                            <h1 className="brand-title">{brand.name}</h1>
+                        {/* Category Details */}
+                        <div className="category-info">
+                            <h1 className="category-title">{category.name}</h1>
 
-                            <div className="brand-meta">
+                            <div className="category-meta">
                                 <div className="meta-item">
                                     <FaCalendarAlt className="icon" />
-                                    <span>Created: {new Date(brand.createdAt).toLocaleString('en-US', {
+                                    <span>Created: {new Date(category.createdAt).toLocaleString('en-US', {
                                         year: 'numeric',
                                         month: '2-digit',
                                         day: '2-digit',
@@ -132,7 +132,7 @@ const BrandView = () => {
                                 </div>
                                 <div className="meta-item">
                                     <FaHistory className="icon" />
-                                    <span>Updated: {new Date(brand.updatedAt).toLocaleString('en-US', {
+                                    <span>Updated: {new Date(category.updatedAt).toLocaleString('en-US', {
                                         year: 'numeric',
                                         month: '2-digit',
                                         day: '2-digit',
@@ -143,8 +143,8 @@ const BrandView = () => {
                                 </div>
                             </div>
 
-                            <div className="brand-description">
-                                <p>{brand.description}</p>
+                            <div className="category-description">
+                                <p>{category.description}</p>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@ const BrandView = () => {
 
                 {/* Related Products Section */}
                 <div className="related-products">
-                    <h2>Products from brand: {brand.name}</h2>
+                    <h2>Products from category: {category.name}</h2>
                     {loadingRelated ? (
                         <div className="loading-spinner"></div>
                     ) : errorRelated ? (
@@ -175,7 +175,7 @@ const BrandView = () => {
                             ))}
                         </div>
                     ) : (
-                        <p>No products found for this brand.</p>
+                        <p>No products found for this category.</p>
                     )}
                 </div>
 
@@ -207,4 +207,4 @@ const BrandView = () => {
     );
 };
 
-export default BrandView;
+export default CategoryView;

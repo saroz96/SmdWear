@@ -14,8 +14,11 @@ import AddBrand from './components/brand/AddBrand';
 import BrandList from './components/brand/BrandList';
 import ViewBrand from './components/brand/ViewBrand';
 import Brands from './components/visitors/brands';
+import EditBrand from './components/brand/EditBrand';
 import AddCategory from './components/Category/AddCategory';
 import CategoryList from './components/Category/CategoryList';
+import ViewCategory from './components/Category/ViewCategory';
+import Editcategory from './components/Category/EditCategory';
 import Category from './components/visitors/Category';
 import AddSlider from './components/Slider/AddSlider';
 import SliderList from './components/Slider/SliderList';
@@ -46,11 +49,6 @@ function App() {
               <Products />
             </>
           } />
-          <Route path="/products/view/:id" element={
-            <>
-              <ViewProduct />
-            </>
-          } />
           {/**Brand */}
           <Route path="/brands/view/all" element={
             <>
@@ -62,6 +60,11 @@ function App() {
               <ViewBrand />
             </>
           } />
+          <Route path="/brands/edit/:id" element={
+            <>
+              <EditBrand />
+            </>
+          } />
 
           {/**Category */}
           <Route path="/categories/view/all" element={
@@ -69,9 +72,16 @@ function App() {
               <Category />
             </>
           } />
-
-
-
+          <Route path="/categories/view/:id" element={
+            <>
+              <ViewCategory />
+            </>
+          } />
+          <Route path="/categories/edit/:id" element={
+            <>
+              <Editcategory />
+            </>
+          } />
           {/* Routes that show full page (Navbar + content) */}
           <Route path="/" element={
             <>
@@ -96,6 +106,12 @@ function App() {
           <Route path="/products/get/all" element={
             <ProtectedRoute requiredRole="admin">
               <ProductList />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/products/view/:id" element={
+            <ProtectedRoute requiredRole="admin">
+              <ViewProduct />
             </ProtectedRoute>
           } />
 

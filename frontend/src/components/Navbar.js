@@ -84,24 +84,7 @@ const Navbar = () => {
                 <li><Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
                 <li><a href="/products/view/all">Products</a></li>
                 <li><a href="/brands/view/all">Brands</a></li>
-                <li><a href="/categories/view/all">Category</a></li>
-                <li className="mega-menu">
-                  <Link to="/products/view/all" onClick={() => setMobileMenuOpen(false)}>Shop+</Link>
-                  <div className="mega-menu-content">
-                    <div className="mega-menu-column">
-                      <h4>Categories</h4>
-                      <Link to="/products/category/men">Men's Wear</Link>
-                      <Link to="/products/category/women">Women's Wear</Link>
-                      <Link to="/products/category/accessories">Accessories</Link>
-                    </div>
-                    <div className="mega-menu-column">
-                      <h4>Collections</h4>
-                      <Link to="/products/collection/summer">Summer Collection</Link>
-                      <Link to="/products/collection/winter">Winter Collection</Link>
-                      <Link to="/products/collection/new">New Arrivals</Link>
-                    </div>
-                  </div>
-                </li>
+                <li><a href="/categories/view/all">Categories</a></li>
                 <li><Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link></li>
                 <li><Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link></li>
               </ul>

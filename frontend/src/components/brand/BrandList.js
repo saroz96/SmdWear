@@ -209,7 +209,7 @@ const BrandList = () => {
                                                         <button
                                                             type="button"
                                                             className="btn btn-outline-warning"
-                                                            onClick={() => navigate(`/brands/${brand._id}`)}
+                                                            onClick={() => navigate(`/brands/edit/${brand._id}`)}
                                                             title="Edit"
                                                         >
                                                             <i className="bi bi-pencil"></i>

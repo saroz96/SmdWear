@@ -136,6 +136,30 @@ router.get('/products/brand/:brandId', async (req, res) => {
     }
 });
 
+
+// Get brands for get edit page
+router.get('/brands/edit/:id', async (req, res) => {
+    try {
+        const brand = await Brand.findById(req.params.id);
+        if (!brand) {
+            return res.status(404).json({ message: 'Brand not found' });
+        }
+        res.json({
+            _id: brand._id,
+            name: brand.name,
+            description: brand.description,
+            image: brand.image,
+            // include other fields as needed
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Error fetching brand',
+            error: err.message
+        });
+    }
+});
+
 // Update brand with optional image update
 router.put('/brands/edit/:id', uploadBrandImage.single('image'), async (req, res) => {
     try {
@@ -147,8 +171,8 @@ router.put('/brands/edit/:id', uploadBrandImage.single('image'), async (req, res
         const { name, description } = req.body;
 
         // Validation
-        if (!name || !description) {
-            return res.status(400).json({ message: 'Name and description are required' });
+        if (!name) {
+            return res.status(400).json({ message: 'Name required' });
         }
 
         let image = brand.image;
@@ -157,7 +181,7 @@ router.put('/brands/edit/:id', uploadBrandImage.single('image'), async (req, res
         if (req.file) {
             // Delete old image if it exists
             if (brand.image && brand.image.public_id) {
-                await deleteImage(brand.image.public_id);
+                await deleteBrandImage(brand.image.public_id);
             }
 
             // Use the same format as your POST route
@@ -197,7 +221,7 @@ router.put('/brands/edit/:id', uploadBrandImage.single('image'), async (req, res
 
         // Clean up uploaded file if error occurred after upload
         if (req.file && req.file.filename) {
-            await deleteImage(req.file.filename);
+            await deleteBrandImage(req.file.filename);
         }
 
         res.status(500).json({
