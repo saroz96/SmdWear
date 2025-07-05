@@ -1,0 +1,269 @@
+/* SLiderList.css */
+.slides-table-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaeaea;
+  transition: all 0.3s ease;
+}
+
+
+.slides-table-wrapper:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.slides-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slides-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.95em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  table-layout: auto;
+}
+
+.slides-table thead tr {
+  background-color: #2c3e50;
+  color: #ffffff;
+  text-align: left;
+}
+
+.slides-table th {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.slides-table th:hover {
+  background-color: #34495e;
+}
+
+.slides-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eaeaea;
+  vertical-align: top;
+}
+
+.slides-table tbody tr {
+  transition: all 0.3s;
+}
+
+.slides-table tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+.slides-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2c3e50;
+}
+
+.slides-table tbody tr:hover {
+  background-color: #f1f7ff;
+}
+
+.slides-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.slides-image:hover {
+  transform: scale(1.05);
+}
+
+.description-cell {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions-cell {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+.search-box {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.empty-state {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* CategoryList.css */
+.image-preview-small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slides-image-tiny {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid #eaeaea;
+}
+
+/* Remove hover effects for such small images */
+.slides-image-tiny:hover {
+  transform: none;
+}
+
+/* Responsive adjustments - keep same size on all screens */
+@media (max-width: 992px) {
+  .slides-image-tiny {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slides-image-tiny {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .slides-image-tiny {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.page-item.active .page-link {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+
+.page-link {
+  color: #2c3e50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .slides-table-wrapper {
+    padding: 20px;
+  }
+  
+  .slides-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slides-table {
+    font-size: 0.85em;
+  }
+
+  .slides-table th,
+  .slides-table td {
+    padding: 8px 10px;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .search-box {
+    min-width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .slides-table-wrapper {
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .slides-image {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Add these styles to your CSS file for not to overlap with sidebar*/
+
+.slides-management-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 60px; /* Match your sidebar width */
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+  transition: width 0.3s ease;
+}
+
+.sidebar:hover {
+  width: 200px; /* Match your sidebar expanded width */
+}
+
+.main-content {
+  margin-left: 60px; /* Same as sidebar width */
+  padding: 20px;
+  width: calc(100% - 60px);
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 200px; /* Same as sidebar expanded width */
+  width: calc(100% - 200px);
+}
+
+/* Ensure the table is responsive */
+.slides-table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    overflow: hidden;
+  }
+  
+  .sidebar:hover {
+    width: 200px;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .sidebar:hover ~ .main-content {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+}

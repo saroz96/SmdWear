@@ -1,0 +1,175 @@
+/* Sidebar.css */
+.sidebar {
+  width: 60px;  /* Reduced from 250px */
+  height: 100vh;
+  background: #1d2327; /* WordPress-like dark gray */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar:hover {
+  width: 200px; /* Expand on hover */
+}
+
+.sidebar-logo {
+  padding: 15px 5px;
+  border-bottom: 1px solid #2c3338;
+  text-align: center;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #72aee6; /* WordPress admin blue */
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.sidebar-nav li {
+  padding: 8px 0;
+  transition: all 0.3s;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.sidebar-nav li:hover,
+.sidebar-nav li.active {
+  background: #2c3338;
+}
+
+.sidebar-nav a {
+  color: #f0f0f1;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 8px 15px;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.nav-label {
+  margin-left: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sidebar:hover .nav-label {
+  opacity: 1;
+}
+.sidebar-auth {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+  margin-top: auto; /* Push to bottom */
+}
+
+.user-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #3498db;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  overflow: hidden;
+}
+
+.user-name {
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-email {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-logout, .btn-login {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover, .btn-login:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-logout i, .btn-login i {
+  font-size: 16px;
+}
+
+/* When sidebar is collapsed */
+.sidebar:not(:hover) .user-details,
+.sidebar:not(:hover) .btn-logout span,
+.sidebar:not(:hover) .btn-login span {
+  display: none;
+}
+
+.sidebar:not(:hover) .user-profile {
+  justify-content: center;
+}
+
+.sidebar:not(:hover) .btn-logout,
+.sidebar:not(:hover) .btn-login {
+  justify-content: center;
+  padding: 8px;
+}

@@ -1,0 +1,31 @@
+/* Slider Form Specific Styles */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.image-specs {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+}
+
+/* Adjust preview image size for sliders */
+.image-preview .preview-image {
+  max-height: 200px;
+  object-fit: contain;
+}
