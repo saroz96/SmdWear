@@ -12,6 +12,7 @@ import EditProduct from './components/EditProduct';
 import ViewProduct from './components/visitors/ViewProduct';
 import AddBrand from './components/brand/AddBrand';
 import BrandList from './components/brand/BrandList';
+import ViewBrand from './components/brand/ViewBrand';
 import Brands from './components/visitors/brands';
 import AddCategory from './components/Category/AddCategory';
 import CategoryList from './components/Category/CategoryList';
@@ -56,6 +57,11 @@ function App() {
               <Brands />
             </>
           } />
+          <Route path="/brands/product/:id" element={
+            <>
+              <ViewBrand />
+            </>
+          } />
 
           {/**Category */}
           <Route path="/categories/view/all" element={
@@ -76,64 +82,64 @@ function App() {
 
           {/* Protected Route */}
           <Route path="/dashboard" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <Dashboard />
             </ProtectedRoute>
           } />
 
           <Route path="/products/new" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <AddProduct />
             </ProtectedRoute>
           } />
 
           <Route path="/products/get/all" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <ProductList />
             </ProtectedRoute>
           } />
 
           {/* Add the edit product route */}
           <Route path="/products/:id" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <EditProduct />
             </ProtectedRoute>
           } />
 
           {/**Brand Route */}
           <Route path="/brands/new" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <AddBrand />
             </ProtectedRoute>
           } />
 
           <Route path="/brands/get/all" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <BrandList />
             </ProtectedRoute>
           } />
 
           {/**Category Route */}
           <Route path="/categories/new" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <AddCategory />
             </ProtectedRoute>
           } />
 
           <Route path="/categories/get/all" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <CategoryList />
             </ProtectedRoute>
           } />
 
           {/**Slider Route */}
           <Route path="/admin/slider/new" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <AddSlider />
             </ProtectedRoute>
           } />
           <Route path="/admin/slider/get/all" element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <SliderList />
             </ProtectedRoute>
           } />

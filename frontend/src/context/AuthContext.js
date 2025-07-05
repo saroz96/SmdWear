@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       if (!token) return false;
 
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const { data } = await axios.get('/api/auth/protected');
+      const { data } = await axios.get('/api/auth/validate-token');
 
       dispatch(setCredentials({
         user: data.user,

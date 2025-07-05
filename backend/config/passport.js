@@ -1,50 +1,29 @@
-// const passport = require('passport');
-// const LocalStrategy = require('passport-local').Strategy;
-// const JwtStrategy = require('passport-jwt').Strategy;
-// const ExtractJwt = require('passport-jwt').ExtractJwt;
-// const User = require('../models/User');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// // Local strategy for username/password
-// passport.use(new LocalStrategy(
-//   { usernameField: 'email' },
-//   async (email, password, done) => {
-//     try {
-//       const user = await User.findOne({ email });
-//       if (!user) return done(null, false, { message: 'Invalid Username & Password.' });
+// JWT Strategy configuration
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET
+};
 
-//       const isMatch = await user.comparePassword(password);
-//       if (!isMatch) return done(null, false, { message: 'Invalid Username & Password.' });
-
-//       return done(null, user);
-//     } catch (err) {
-//       return done(err);
-//     }
-//   }
-// ));
-
-// // JWT strategy for protected routes
-// const jwtOptions = {
-//   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//   secretOrKey: process.env.JWT_SECRET
-// };
-
-// passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
-//   try {
-//     const user = await User.findById(payload.id);
-//     if (user) {
-//       return done(null, user);
-//     } else {
-//       return done(null, false);
-//     }
-//   } catch (err) {
-//     return done(err, false);
-//   }
-// }));
+passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
+  try {
+    const user = await User.findById(payload.id);
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  } catch (err) {
+    return done(err, false);
+  }
+}));
 
 // Generate JWT token
 exports.generateToken = (user) => {

@@ -106,7 +106,7 @@ const Category = ({ category }) => {
 
             // Redirect after success
             setTimeout(() => {
-                navigate(`/categories/edit/${response.data._id}`);
+                navigate(`/categories/get/all`);
             }, 2000);
 
         } catch (err) {

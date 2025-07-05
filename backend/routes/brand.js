@@ -2,6 +2,7 @@ const express = require('express');
 const Brand = require('../models/Brand');
 const passport = require('passport');
 const router = express.Router();
+const Product = require('../models/Product');
 
 const { uploadBrandImage, deleteBrandImage } = require('../middlewares/brandUploadMiddleware');
 
@@ -62,7 +63,7 @@ router.post('/brands/new', uploadBrandImage.single('image'), async (req, res) =>
 });
 
 // Get all products for owner
-router.get('/brands/get/all', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/brands/get/all', async (req, res) => {
     try {
         const brands = await Brand.find().sort({ createdAt: -1 });
         res.json(brands);
@@ -94,6 +95,42 @@ router.get('/brands', async (req, res) => {
     try {
         const brands = await Brand.find().sort({ name: 1 });
         res.json(brands);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//view brands
+router.get('/brands/product/:id', async (req, res) => {
+    try {
+        const brand = await Brand.findById(req.params.id)
+
+        if (!brand) {
+            return res.status(404).json({ message: 'Product Brand not found' });
+        }
+
+        res.json({
+            _id: brand._id,
+            name: brand.name,
+            description: brand.description,
+            image: brand.image,
+            createdAt: brand.createdAt,
+            updatedAt: brand.updatedAt,
+        })
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Get products by brand
+router.get('/products/brand/:brandId', async (req, res) => {
+    try {
+        const products = await Product.find({ brand: req.params.brandId })
+            .select('name price image')
+            .limit(12);
+
+        res.json(products);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

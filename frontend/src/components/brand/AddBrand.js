@@ -86,7 +86,7 @@ const Brand = ({ brand }) => {
 
       // Redirect after success
       setTimeout(() => {
-        navigate(`/brands/edit/${response.data._id}`);
+        navigate(`/brands/get/all`);
       }, 2000);
 
     } catch (err) {

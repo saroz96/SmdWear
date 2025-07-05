@@ -1,3 +1,4 @@
+
 /* Sidebar.css */
 .sidebar {
   width: 60px;  /* Reduced from 250px */
@@ -18,10 +19,21 @@
   width: 200px; /* Expand on hover */
 }
 
-.sidebar-logo {
+.sidebar-header {
   padding: 15px 5px;
   border-bottom: 1px solid #2c3338;
   text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-footer {
+  flex-shrink: 0;
 }
 
 .logo {
@@ -35,8 +47,8 @@
 }
 
 .sidebar-nav {
-  flex: 1;
   padding: 10px 0;
+  margin: 0;
 }
 
 .sidebar-nav li {
@@ -74,11 +86,11 @@
 .sidebar:hover .nav-label {
   opacity: 1;
 }
+
 .sidebar-auth {
   padding: 15px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.1);
-  margin-top: auto; /* Push to bottom */
 }
 
 .user-section {
@@ -172,4 +184,22 @@
 .sidebar:not(:hover) .btn-login {
   justify-content: center;
   padding: 8px;
+}
+
+/* Scrollbar styling */
+.sidebar-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }

@@ -157,18 +157,7 @@ const ProductList = () => {
                                             ))}
                                             <span>({product.reviewCount})</span>
                                         </div>
-                                        <div className="product-price">
-                                            {product.discount > 0 ? (
-                                                <>
-                                                    <span className="original-price">${product.price}</span>
-                                                    <span className="discounted-price">
-                                                        ${(product.price * (1 - product.discount / 100))}
-                                                    </span>
-                                                </>
-                                            ) : (
-                                                <span>${product.price}</span>
-                                            )}
-                                        </div>
+                                     
                                     </div>
                                 </div>
                             ))}

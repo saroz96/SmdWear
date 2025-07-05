@@ -45,33 +45,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
-// router.post('/login', (req, res, next) => {
-//     passport.authenticate('local', { session: false }, (err, user, info) => {
-//         if (err) return next(err);
-//         if (!user) {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: info.message
-//             });
-//         }
-
-//         // Generate token (MUST ADD THIS)
-//         const token = generateToken(user);
-
-//         return res.json({
-//             success: true,
-//             token: token,  // Include token in response
-//             user: {
-//                 id: user._id,
-//                 firstName: user.firstName,  // Add firstName
-//                 email: user.email,
-//                 role: user.role
-//             }
-//         });
-//     })(req, res, next);
-// });
-
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return next(err);
@@ -104,12 +77,42 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-// Protected route example
+// Add this route in your authRoutes.js
+router.get('/validate-token',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        // If we get here, the token is valid
+        res.json({
+            user: {
+                id: req.user._id,
+                firstName: req.user.firstName,
+                email: req.user.email,
+                role: req.user.role
+            }
+        });
+    }
+);
+
+// authRoutes.js
 router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.json({
-        message: 'This is a protected route',
-        user: req.user
-    });
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'Not authenticated' });
+        }
+
+        // Return minimal user data without sensitive information
+        res.json({
+            user: {
+                id: req.user._id,
+                firstName: req.user.firstName,
+                email: req.user.email,
+                role: req.user.role // singular role
+            }
+        });
+    } catch (err) {
+        console.error('Protected route error:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 module.exports = router;

@@ -198,7 +198,7 @@ const BrandList = () => {
                                                         <button
                                                             type="button"
                                                             className="btn btn-outline-primary"
-                                                            onClick={() => navigate(`/brands/view/${brand._id}`)}
+                                                            onClick={() => navigate(`/brands/product/${brand._id}`)}
                                                             title="View details"
                                                         >
                                                             <i className="bi bi-eye"></i>

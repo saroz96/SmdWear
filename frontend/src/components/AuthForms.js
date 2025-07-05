@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+
+
 export const LoginForm = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -35,7 +37,7 @@ export const LoginForm = () => {
             });
 
             // Redirect based on role after successful login
-            const redirectPath = (loginResponse.user.role === 'Admin')
+            const redirectPath = (loginResponse.user.role === 'admin')
                 ? '/dashboard'
                 : '/';
 

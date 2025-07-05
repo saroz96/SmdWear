@@ -3,7 +3,6 @@ const router = express.Router();
 const Slide = require('../models/Slide');
 const { uploadSliderImage, deleteSliderImage } = require('../middlewares/uploadSliderImage');
 const { protect, admin } = require('../middlewares/authMiddleware');
-const passport = require('passport');
 
 // @desc    Get all slides
 // @route   GET /api/slides
@@ -44,7 +43,7 @@ router.post('/admin/slider/new', protect, uploadSliderImage.single('image'), asy
 });
 
 // Get all categories for owner
-router.get('/admin/slider/get/all', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/admin/slider/get/all', async (req, res) => {
     try {
         const slides = await Slide.find().sort({ createdAt: -1 });
         res.json(slides);

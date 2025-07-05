@@ -66,7 +66,7 @@ router.post('/products/new', upload.single('image'), async (req, res) => {
 
 
 // Get all products for owner
-router.get('/products/get/all', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/products/get/all', async (req, res) => {
     try {
         const products = await Product.find()
             .populate({

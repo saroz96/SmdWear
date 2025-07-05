@@ -129,8 +129,10 @@ const Navbar = () => {
                       <span className="account-name">{currentUser.firstName}</span>
                     </Link>
                     <div className="dropdown-menu">
-                      <Link to="/dashboard">Dashboard</Link> {/* Added Dashboard link */}
-                      <Link to="/dashboard">My Account</Link>
+                      {currentUser.role === 'admin' && (
+                        <Link to="/dashboard">Dashboard</Link>
+                      )}
+                      <Link to="/account">My Account</Link>
                       <button onClick={handleLogout}>Logout</button>
                     </div>
                   </div>

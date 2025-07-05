@@ -110,7 +110,7 @@ const BrandList = () => {
                                             onClick={() => navigate(`/brands/view/${brand._id}`)}
                                         />
                                         <div className="brand-actions">
-                                            <button className="quick-view" onClick={() => navigate(`/brands/view/${brand._id}`)}>
+                                            <button className="quick-view" onClick={() => navigate(`/brands/product/${brand._id}`)}>
                                                 <FiEye /> View
                                             </button>
                                         </div>

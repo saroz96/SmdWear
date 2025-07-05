@@ -1,6 +1,5 @@
 const express = require('express');
 const Category = require('../models/Category');
-const passport = require('passport');
 const router = express.Router();
 
 const { uploadCategoryImage, deleteCategoryImage } = require('../middlewares/categoryUploadMiddleware');
@@ -66,7 +65,7 @@ router.post('/categories/new', uploadCategoryImage.single('image'), async (req, 
 
 
 // Get all categories for owner
-router.get('/categories/get/all', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/categories/get/all', async (req, res) => {
     try {
         const categories = await Category.find().sort({ createdAt: -1 });
         res.json(categories);

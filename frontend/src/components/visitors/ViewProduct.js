@@ -491,11 +491,7 @@ const ProductView = () => {
                 <h2>Related Products</h2>
 
                 {/* Add to your related products section */}
-                {relatedProducts.length === 0 && !loadingRelated && (
-                    <div style={{ color: 'red', padding: '10px' }}>
-                        No related products found for brand {product.brand?.name} (ID: {product.brand?._id})
-                    </div>
-                )}
+           
                 {loadingRelated ? (
                     <div className="loading-message">Loading related products...</div>
                 ) : errorRelated ? (

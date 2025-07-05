@@ -76,7 +76,7 @@ const AddSlider = () => {
 
       // Optionally redirect after delay
       setTimeout(() => {
-        navigate('/admin/sliders');
+        navigate('/admin/slider/get/all');
       }, 2000);
 
     } catch (err) {
