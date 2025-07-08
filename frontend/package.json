@@ -15,6 +15,7 @@
     "antd": "^5.26.3",
     "assert": "^2.1.0",
     "axios": "^1.10.0",
+    "backend": "file:..",
     "bootstrap": "^5.3.7",
     "browserify-zlib": "^0.2.0",
     "classnames": "^2.5.1",

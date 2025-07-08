@@ -72,7 +72,7 @@ router.get('/products/count', async (req, res) => {
         const count = await Product.countDocuments();
         res.json({ count });
     } catch (err) {
-        console.log(err);
+        (err);
         res.status(500).json({ error: 'Server error during products counts' });
     }
 })
@@ -95,7 +95,7 @@ router.get('/products/get/all', async (req, res) => {
             .sort({ createdAt: -1 })
             .lean();
 
-        console.log(products[0]?.category); // Debug: Check first product's category
+        (products[0]?.category); // Debug: Check first product's category
         res.json(products);
     } catch (err) {
         console.error(err);
@@ -509,7 +509,7 @@ router.get('/products/related/:brandId', async (req, res) => {
         const { brandId } = req.params;
         const { exclude } = req.query;
 
-        console.log('Raw params:', {
+        ('Raw params:', {
             brandId: brandId,
             brandIdType: typeof brandId,
             exclude: exclude
@@ -530,14 +530,14 @@ router.get('/products/related/:brandId', async (req, res) => {
             _id: { $ne: new mongoose.Types.ObjectId(exclude) }
         };
 
-        console.log('Final query:', query);
+        ('Final query:', query);
 
         const relatedProducts = await Product.find(query)
             .limit(4)
             .select('name price image shortDescription')
             .lean();
 
-        console.log('Found products:', relatedProducts.length);
+        ('Found products:', relatedProducts.length);
         res.json(relatedProducts);
     } catch (err) {
         console.error('Full error:', err);

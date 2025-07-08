@@ -11,7 +11,7 @@ const createDefaultUser = async () => {
 
     const existingUser = await User.findOne({ email: 'smd@admin.com' });
     if (existingUser) {
-      console.log('Default admin user already exists.');
+      ('Default admin user already exists.');
       return;
     }
 
@@ -25,7 +25,7 @@ const createDefaultUser = async () => {
     });
 
     await defaultUser.save();
-    console.log('Default admin user created successfully.');
+    ('Default admin user created successfully.');
   } catch (error) {
     console.error('Error creating default admin user:', error);
   } finally {

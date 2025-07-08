@@ -65,10 +65,8 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      console.log('Registering user:', userData);
 
       const { data } = await axios.post('/api/auth/register', userData);
-      console.log('Registration response:', data);
 
       if (options.autoLogin && data.token) {
         localStorage.setItem('token', data.token);

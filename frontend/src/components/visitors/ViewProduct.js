@@ -92,16 +92,9 @@ const ProductView = () => {
             setErrorRelated(null);
 
             try {
-                // Debug what we're sending
-                console.log('Fetching related products for:', {
-                    brandId: brandId,
-                    brandIdType: typeof brandId,
-                    excludeId: excludeId
-                });
 
                 const response = await axios.get(`/api/products/related/${brandId}?exclude=${excludeId}`);
 
-                console.log('Received related products:', response.data);
                 setRelatedProducts(response.data);
             } catch (err) {
                 console.error('Error fetching related products:', {

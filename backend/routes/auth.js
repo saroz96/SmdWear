@@ -5,7 +5,7 @@ const User = require('../models/User');
 const { generateToken } = require('../config/passport');
 router.post('/register', async (req, res) => {
     try {
-        console.log('Registration attempt:', req.body);
+        ('Registration attempt:', req.body);
         const { firstName, lastName, email, password } = req.body;
 
         // Validate input
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
 
         const user = new User({ firstName, lastName, email, password });
         await user.save();
-        console.log('User created:', user);
+        ('User created:', user);
 
         // Generate token
         const token = generateToken(user);
